@@ -1,0 +1,61 @@
+<html>
+<head>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script src='snowfall.jquery.js'></script>
+	<link rel="stylesheet" href="styles.css"></link>
+</head>
+<body style='background: #666;'>
+		<input type="button" id="clear" value="Click to clear"/>
+		<input type="button" id="round" value="Rounded"/>
+		<input type="button" id="shadows" value="Shadows"/>
+		<input type="button" id="roundshadows" value="Rounded Shadows"/>
+		<input type="button" id="collection" value="Snow Collection"/>
+	<div class="collectonme">
+		<p>Collect on meeeeee!!!</p>
+	</div>
+	<div class="collectonme">
+		<p>Collect on meeeeee!!!</p>
+	</div>
+	<div class="collectonme">
+		<p>Collect on meeeeee!!!</p>
+	</div>
+</body>
+	<script type='text/javascript'> 	
+		$(document).ready(function(){
+			//Start the snow default options you can also make it snow in certain elements, etc.
+			$(document).snowfall();
+			
+			$("#clear").click(function(){
+				$(document).snowfall('clear'); // How you clear
+			});
+			
+			$("#round").click(function(){
+				$('body').css({'backgroundColor' : '#666'});
+				$(document).snowfall('clear');
+				$(document).snowfall({round : true, minSize: 5, maxSize:8}); // add rounded
+			});
+			
+			$("#shadows").click(function(){
+				$('body').css({'backgroundColor' : '#ccc'});
+				$(document).snowfall('clear');
+				
+				
+				$(document).snowfall({shadow : true, flakeCount:200}); // add shadows
+			});
+
+			$("#roundshadows").click(function(){
+				$('body').css({'backgroundColor' : '#ccc'});
+				$(document).snowfall('clear');
+				$(document).snowfall({shadow : true, round : true,  minSize: 5, maxSize:8}); // add shadows
+			});
+			
+			$("#collection").click(function(){
+				$('body').css({'backgroundColor' : '#666'});
+				$(document).snowfall('clear');
+				
+				
+				$(document).snowfall({collection : '.collectonme', flakeCount : 250});
+			});
+		});
+		 </script>
+</html>
