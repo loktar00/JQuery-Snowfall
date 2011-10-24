@@ -80,7 +80,7 @@
 				this.speed = _speed;
 				this.step = 0;
 				this.stepSize = random(1,10) / 100;
-				
+	
 				if(options.collection){
 					this.target = canvasCollection[random(0,canvasCollection.length-1)];
 				}
@@ -202,7 +202,7 @@
 								canvas.style.left = bounds.left;
 								canvas.style.top = bounds.top-collectionHeight;
 								
-								for(var w = 0; w < bounds.width/options.minSize; w+=options.minSize){
+								for(var w = 0; w < bounds.width; w++){
 									collisionData[w] = [];
 								}
 								
