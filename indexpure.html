@@ -1,0 +1,27 @@
+<html>
+<head>
+	<script src='snowfall.js'></script>
+	<link rel="stylesheet" href="styles.css"></link>
+</head>
+<body style='background: #666;'>
+		<input type="button" id="clear" value="Click to clear"/>
+		<input type="button" id="round" value="Rounded"/>
+		<input type="button" id="shadows" value="Shadows"/>
+		<input type="button" id="roundshadows" value="Rounded Shadows"/>
+		<input type="button" id="collection" value="Snow Collection"/>
+	<div id="collect" class="collectonme">
+		<p>Collect on meeeeee!!!</p>
+	</div>
+	<div class="collectonme">
+		<p>Collect on meeeeee!!!</p>
+	</div>
+</body>
+	<script type='text/javascript'> 	
+		var clearBut = document.getElementById("clear");
+
+			clearBut.onclick = function(){
+				$(document).snowfall('clear'); // How you clear
+			}
+				snowFall.snow(document.getElementsByTagName("body"), {'flakeCount' : 20, 'round' :true, maxSize:10});
+	</script>
+</html>
