@@ -77,7 +77,8 @@
 				round : false,
 				shadow : false,
 				collection : false,
-				collectionHeight : 40
+				collectionHeight : 40,
+				deviceorientation : false
 			},
 			options = $.extend(defaults, options),
 			random = function random(min, max){
@@ -125,8 +126,13 @@
 					this.element.style.left = this.x + 'px';
 					
 					this.step += this.stepSize;
-					this.x += Math.cos(this.step);
-					
+
+					if (doRatio === false) {
+						this.x += Math.cos(this.step);
+					} else {
+						this.x += (doRatio + Math.cos(this.step));
+					}
+
 					// Pileup check
 					if(options.collection){
 						if(this.x > this.target.x && this.x < this.target.width + this.target.x && this.y > this.target.y && this.y < this.target.height + this.target.y){
@@ -260,7 +266,15 @@
 			if(options.shadow){
 				$('.snowfall-flakes').css({'-moz-box-shadow' : '1px 1px 1px #555', '-webkit-box-shadow' : '1px 1px 1px #555', 'box-shadow' : '1px 1px 1px #555'});
 			}
-		
+
+			// On newer Macbooks Snowflakes will fall based on deviceorientation
+			var doRatio = false;
+			if (options.deviceorientation) {
+				$(window).bind('deviceorientation', function(event) {
+					doRatio = event.originalEvent.gamma * 0.1;
+				});
+			}
+
 			// this controls flow of the updating snow
 			function snow(){
 				for( i = 0; i < flakes.length; i += 1){
