@@ -86,7 +86,7 @@ var snowFall = (function(){
 			setStyle = function(element, props)
 			{
 				for (var property in props){
-					element.style[property] = props[property];
+					element.style[property] = props[property] + ((property == 'width' || property == 'height' || property.indexOf('radius')>=0) ? 'px' : '');
 				}
 			},
 			// snowflake object
