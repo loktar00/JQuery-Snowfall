@@ -16,6 +16,9 @@
 	   limitations under the License.
 	====================================================================
 
+	Version 1.51 Dec 2nd 2012
+	// fixed bug where snow collection didn't happen if a valid doctype was declared.
+	
 	Version 1.5 Oct 5th 2011
 	Added collecting snow! Uses the canvas element to collect snow. In order to initialize snow collection use the following
 	
@@ -222,8 +225,8 @@
 								canvas.style.position = 'absolute';
 								canvas.height = collectionHeight;
 								canvas.width = bounds.width;
-								canvas.style.left = bounds.left;
-								canvas.style.top = bounds.top-collectionHeight;
+								canvas.style.left = bounds.left + 'px';
+								canvas.style.top = bounds.top-collectionHeight + 'px';
 								
 								for(var w = 0; w < bounds.width; w++){
 									collisionData[w] = [];
