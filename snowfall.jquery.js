@@ -1,4 +1,24 @@
 /*  Snowfall jquery plugin
+
+	====================================================================
+	LICENSE
+	====================================================================
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	   http://www.apache.org/licenses/LICENSE-2.0
+
+	   Unless required by applicable law or agreed to in writing, software
+	   distributed under the License is distributed on an "AS IS" BASIS,
+	   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	   See the License for the specific language governing permissions and
+	   limitations under the License.
+	====================================================================
+
+	Version 1.51 Dec 2nd 2012
+	// fixed bug where snow collection didn't happen if a valid doctype was declared.
+	
 	Version 1.5 Oct 5th 2011
 	Added collecting snow! Uses the canvas element to collect snow. In order to initialize snow collection use the following
 	
@@ -60,7 +80,8 @@
 				round : false,
 				shadow : false,
 				collection : false,
-				collectionHeight : 40
+				collectionHeight : 40,
+				deviceorientation : false
 			},
 			options = $.extend(defaults, options),
 			random = function random(min, max){
@@ -80,7 +101,7 @@
 				this.speed = _speed;
 				this.step = 0;
 				this.stepSize = random(1,10) / 100;
-				
+	
 				if(options.collection){
 					this.target = canvasCollection[random(0,canvasCollection.length-1)];
 				}
@@ -108,8 +129,13 @@
 					this.element.style.left = this.x + 'px';
 					
 					this.step += this.stepSize;
-					this.x += Math.cos(this.step);
-					
+
+					if (doRatio === false) {
+						this.x += Math.cos(this.step);
+					} else {
+						this.x += (doRatio + Math.cos(this.step));
+					}
+
 					// Pileup check
 					if(options.collection){
 						if(this.x > this.target.x && this.x < this.target.width + this.target.x && this.y > this.target.y && this.y < this.target.height + this.target.y){
@@ -199,10 +225,10 @@
 								canvas.style.position = 'absolute';
 								canvas.height = collectionHeight;
 								canvas.width = bounds.width;
-								canvas.style.left = bounds.left;
-								canvas.style.top = bounds.top-collectionHeight;
+								canvas.style.left = bounds.left + 'px';
+								canvas.style.top = bounds.top-collectionHeight + 'px';
 								
-								for(var w = 0; w < bounds.width/options.minSize; w+=options.minSize){
+								for(var w = 0; w < bounds.width; w++){
 									collisionData[w] = [];
 								}
 								
@@ -243,7 +269,15 @@
 			if(options.shadow){
 				$('.snowfall-flakes').css({'-moz-box-shadow' : '1px 1px 1px #555', '-webkit-box-shadow' : '1px 1px 1px #555', 'box-shadow' : '1px 1px 1px #555'});
 			}
-		
+
+			// On newer Macbooks Snowflakes will fall based on deviceorientation
+			var doRatio = false;
+			if (options.deviceorientation) {
+				$(window).bind('deviceorientation', function(event) {
+					doRatio = event.originalEvent.gamma * 0.1;
+				});
+			}
+
 			// this controls flow of the updating snow
 			function snow(){
 				for( i = 0; i < flakes.length; i += 1){

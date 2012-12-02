@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src='snowfall.jquery.js'></script>
 	<link rel="stylesheet" href="styles.css"></link>
 </head>
@@ -10,6 +11,7 @@
 		<input type="button" id="shadows" value="Shadows"/>
 		<input type="button" id="roundshadows" value="Rounded Shadows"/>
 		<input type="button" id="collection" value="Snow Collection"/>
+        <input type="button" id="deviceorientation" value="Deviceorientation"/>
 	<div class="collectonme">
 		<p>Collect on meeeeee!!!</p>
 	</div>
@@ -52,10 +54,15 @@
 			$("#collection").click(function(){
 				$('body').css({'backgroundColor' : '#666'});
 				$(document).snowfall('clear');
-				
-				
 				$(document).snowfall({collection : '.collectonme', flakeCount : 250});
 			});
+
+			$("#deviceorientation").click(function(){
+				$('body').css({'backgroundColor' : '#666'});
+				$(document).snowfall('clear');
+				$(document).snowfall({deviceorientation : true, round : true, minSize: 5, maxSize:8});
+			});
+
 		});
 		 </script>
 </html>
