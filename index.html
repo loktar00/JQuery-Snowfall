@@ -10,6 +10,7 @@
 		<input type="button" id="round" value="Rounded"/>
 		<input type="button" id="shadows" value="Shadows"/>
 		<input type="button" id="roundshadows" value="Rounded Shadows"/>
+		<input type="button" id="imagebut" value="Images"/>
 		<input type="button" id="collection" value="Snow Collection"/>
         <input type="button" id="deviceorientation" value="Deviceorientation"/>
 	<div class="collectonme">
@@ -55,6 +56,12 @@
 				$('body').css({'background' : 'url(images/smashing.jpg)'});
 				$('.collectonme').toggle();
 				$(document).snowfall({collection : '.collectonme', flakeCount : 250});
+			});
+			
+			$("#imgbut").click(function(){
+				$(document).snowfall('clear');
+				$('body').css({'background' : 'url(images/smashing.jpg)'});
+				$(document).snowfall({image :"images/flake.png"});
 			});
 
 			$("#deviceorientation").click(function(){

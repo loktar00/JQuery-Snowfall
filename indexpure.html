@@ -8,20 +8,48 @@
 		<input type="button" id="round" value="Rounded"/>
 		<input type="button" id="shadows" value="Shadows"/>
 		<input type="button" id="roundshadows" value="Rounded Shadows"/>
-		<input type="button" id="collection" value="Snow Collection"/>
+		<input type="button" id="imagebut" value="Images"/>
 	<div id="collect" class="collectonme">
 		<p>Collect on meeeeee!!!</p>
 	</div>
 	<div class="collectonme">
 		<p>Collect on meeeeee!!!</p>
 	</div>
-</body>
 	<script type='text/javascript'> 	
-		var clearBut = document.getElementById("clear");
-
-			clearBut.onclick = function(){
-				$(document).snowfall('clear'); // How you clear
-			}
-				snowFall.snow(document.getElementsByTagName("body"), {'flakeCount' : 20, 'round' :true, maxSize:10});
-	</script>
+		var collectOnMe = document.querySelectorAll('.collectonme'),
+			buttons = document.getElementsByTagName("input");
+		
+		for(var i = 0; i < collectOnMe.length; i++){
+			collectOnMe[i].style.display = "none";
+		}
+		
+		//default options
+		snowFall.snow(document.body);
+		
+		document.getElementById("clear").addEventListener("click", function(){
+			snowFall.snow(document.body, "clear");
+		});
+		
+		document.getElementById("round").addEventListener("click", function(){
+			snowFall.snow(document.body, "clear");
+			snowFall.snow(document.body, {round : true, minSize: 5, maxSize:8});
+		});
+		
+		document.getElementById("shadows").addEventListener("click", function(){
+			snowFall.snow(document.body, "clear");
+			snowFall.snow(document.body, {shadow : true, flakeCount:200});
+		});
+		
+		document.getElementById("roundshadows").addEventListener("click", function(){
+			snowFall.snow(document.body, "clear");
+			snowFall.snow(document.body, {round : true,  minSize: 5, maxSize:8});
+		});
+		
+		document.getElementById("imagebut").addEventListener("click", function(){
+			snowFall.snow(document.body, "clear");
+			snowFall.snow(document.body, {image : "images/flake.png", minSize: 10, maxSize:32});
+		});
+	
+		 </script>
+	</body>
 </html>

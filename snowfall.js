@@ -59,6 +59,7 @@ var snowFall = (function(){
 			round : false,
 			shadow : false,
 			collection : false,
+			image : false,
 			collectionHeight : 40
 			},
 			element = {},
@@ -105,11 +106,20 @@ var snowFall = (function(){
 					this.target = canvasCollection[random(0,canvasCollection.length-1)];
 				}
 				
-				var flakeObj = document.createElement("div");
+				var flakeObj = null;
+				
+				if(defaults.image){
+					flakeObj = new Image();
+					flakeObj.src = defaults.image;
+				}else{
+					flakeObj = document.createElement("div");
+					setStyle(flakeObj, {'background' : defaults.flakeColor});
+				}
+				
 				flakeObj.className = 'snowfall-flakes';
 				flakeObj.setAttribute('id','flake-' + this.id);
-				setStyle(flakeObj, {'width' : this.size, 'height' : this.size, 'background' : defaults.flakeColor, 'position' : 'absolute', 'top' : this.y, 'left' : this.x, 'fontSize' : 0, 'zIndex' : defaults.flakeIndex});
-
+				setStyle(flakeObj, {'width' : this.size, 'height' : this.size, 'position' : 'absolute', 'top' : this.y, 'left' : this.x, 'fontSize' : 0, 'zIndex' : defaults.flakeIndex});
+		
 				// This adds the style to make the snowflakes round via border radius property 
 				if(defaults.round){
 					flakeObj.style
@@ -171,6 +181,8 @@ var snowFall = (function(){
 				elTop = element.offsetTop;
 				elLeft = element.offsetLeft;
 
+				element.snow = this;
+				
 				// if this is the body the offset is a little different
 				if(element.tagName.toLowerCase() === 'body'){
 					widthOffset = 25;
@@ -191,14 +203,38 @@ var snowFall = (function(){
 				}
 				// start the snow
 				animateSnow();
+			},
+			clear : function(){
+				var flakeChildren = null;
+				
+				if(!element.getElementsByClassName){
+					flakeChildren = element.querySelectorAll('.snowfall-flakes');
+				}else{
+					flakeChildren = element.getElementsByClassName('snowfall-flakes');
+				}
+
+				var flakeChilLen = flakeChildren.length;
+				while(flakeChilLen--){
+					element.removeChild(flakeChildren[flakeChilLen]);
+				}
+				
+				flakes = [];
+				clearTimeout(snowTimeout);
 			}
 		}
 	};
 	return{
 		snow : function(elements, options){
 			if(typeof(options) == "string"){
-				// ToDo Implement clearing
-				
+				if(elements.length > 0){
+					for(var i = 0; i < elements.length; i++){
+						if(elements[i].snow){
+							elements[i].snow.clear();
+						}
+					}
+				}else{
+					elements.snow.clear();
+				}
 			}else{
 				if(elements.length > 0){
 					for(var i = 0; i < elements.length; i++){
