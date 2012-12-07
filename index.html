@@ -10,7 +10,7 @@
 		<input type="button" id="round" value="Rounded"/>
 		<input type="button" id="shadows" value="Shadows"/>
 		<input type="button" id="roundshadows" value="Rounded Shadows"/>
-		<input type="button" id="imagebut" value="Images"/>
+		<input type="button" id="imgbut" value="Images"/>
 		<input type="button" id="collection" value="Snow Collection"/>
         <input type="button" id="deviceorientation" value="Deviceorientation"/>
 	<div class="collectonme">
@@ -22,7 +22,6 @@
 	<div class="collectonme">
 		<p>Collect on meeeeee!!!</p>
 	</div>
-</body>
 	<script type='text/javascript'> 	
 		$(document).ready(function(){
 			$('.collectonme').hide();
@@ -61,7 +60,7 @@
 			$("#imgbut").click(function(){
 				$(document).snowfall('clear');
 				$('body').css({'background' : 'url(images/smashing.jpg)'});
-				$(document).snowfall({image :"images/flake.png"});
+				$(document).snowfall({image :"images/flake.png", minSize: 10, maxSize:32});
 			});
 
 			$("#deviceorientation").click(function(){
@@ -72,4 +71,5 @@
 
 		});
 		 </script>
+	</body>
 </html>

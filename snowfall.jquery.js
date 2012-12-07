@@ -106,7 +106,17 @@
 					this.target = canvasCollection[random(0,canvasCollection.length-1)];
 				}
 				
-				var flakeMarkup = $(document.createElement("div")).attr({'class': 'snowfall-flakes', 'id' : 'flake-' + this.id}).css({'width' : this.size, 'height' : this.size, 'background' : options.flakeColor, 'position' : 'absolute', 'top' : this.y, 'left' : this.x, 'fontSize' : 0, 'zIndex' : options.flakeIndex});
+				var flakeMarkup = null;
+				
+				if(options.image){
+					flakeMarkup = $(document.createElement("image"));
+					flakeMarkup[0].src = options.image;
+				}else{
+					flakeMarkup = $(document.createElement("div"));
+					flakeMarkup.css({'background' : options.flakeColor});
+				}
+				
+				flakeMarkup.attr({'class': 'snowfall-flakes', 'id' : 'flake-' + this.id}).css({'width' : this.size, 'height' : this.size, 'position' : 'absolute', 'top' : this.y, 'left' : this.x, 'fontSize' : 0, 'zIndex' : options.flakeIndex});
 				
 				if($(element).get(0).tagName === $(document).get(0).tagName){
 					$('body').append(flakeMarkup);
@@ -198,7 +208,7 @@
 				}
 			}
 		
-			// Private vars
+			// local vars
 			var flakes = [],
 				flakeId = 0,
 				i = 0,
@@ -249,8 +259,9 @@
 			
 			// Bind the window resize event so we can get the innerHeight again
 			$(window).bind("resize", function(){  
-				elHeight = $(element).height();
-				elWidth = $(element).width();
+				elHeight = $(element)[0].clientHeight;
+				elWidth = $(element)[0].offsetWidth;
+				console.log(elHeight);
 			}); 
 			
 
