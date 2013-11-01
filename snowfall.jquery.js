@@ -16,10 +16,7 @@
 	   limitations under the License.
 	====================================================================
 
-	Version 1.6 Dec 2nd 2012
-	Can now use images for snowflakes
-	$(document).snowfall({image : "path/to/image"});
-	
+	Version 1.51 Dec 2nd 2012
 	// fixed bug where snow collection didn't happen if a valid doctype was declared.
 	
 	Version 1.5 Oct 5th 2011
@@ -112,7 +109,7 @@
 				var flakeMarkup = null;
 				
 				if(options.image){
-					flakeMarkup = $(document.createElement("image"));
+					flakeMarkup = $(document.createElement("img"));
 					flakeMarkup[0].src = options.image;
 				}else{
 					flakeMarkup = $(document.createElement("div"));
