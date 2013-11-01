@@ -45,6 +45,33 @@
 	shadow		true or false, gives the snowflakes a shadow if the browser supports it.
 		
 */
+
+// Paul Irish requestAnimationFrame polyfill
+(function() {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame =
+          window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
+
 var snowFall = (function(){
 	function jSnow(){
 		// local methods
@@ -87,10 +114,10 @@ var snowFall = (function(){
 			setStyle = function(element, props)
 			{
 				for (var property in props){
-					element.style[property] = props[property] + ((property == 'width' || property == 'height' || property.indexOf('radius')>=0) ? 'px' : '');
+					element.style[property] = props[property] + ((property == 'width' || property == 'height') ? 'px' : '');
 				}
 			},
-			// snowflake object
+			// snowflake
 			flake = function(_x, _y, _size, _speed, _id)
 			{
 				// Flake properties
@@ -122,8 +149,7 @@ var snowFall = (function(){
 		
 				// This adds the style to make the snowflakes round via border radius property 
 				if(defaults.round){
-					flakeObj.style
-					setStyle(flakeObj,{'-moz-border-radius' : defaults.maxSize, '-webkit-border-radius' : defaults.maxSize, 'borderRadius' : defaults.maxSize});
+					setStyle(flakeObj,{'-moz-border-radius' : ~~(defaults.maxSize) + 'px', '-webkit-border-radius' : ~~(defaults.maxSize) + 'px', 'borderRadius' : ~~(defaults.maxSize) + 'px'});
 				}
 			
 				// This adds shadows just below the snowflake so they pop a bit on lighter colored web pages
@@ -168,7 +194,7 @@ var snowFall = (function(){
 				for(var i = 0; i < flakes.length; i += 1){
 					flakes[i].update();
 				}
-				snowTimeout = setTimeout(function(){animateSnow()}, 30);
+				snowTimeout = requestAnimationFrame(function(){animateSnow()});
 			}
 		return{
 			snow : function(_element, _options){
@@ -219,7 +245,7 @@ var snowFall = (function(){
 				}
 				
 				flakes = [];
-				clearTimeout(snowTimeout);
+				cancelAnimationFrame(snowTimeout);
 			}
 		}
 	};
