@@ -109,7 +109,7 @@
 				var flakeMarkup = null;
 				
 				if(options.image){
-					flakeMarkup = $(document.createElement("image"));
+					flakeMarkup = $(document.createElement("img"));
 					flakeMarkup[0].src = options.image;
 				}else{
 					flakeMarkup = $(document.createElement("div"));
