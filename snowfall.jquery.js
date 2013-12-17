@@ -98,6 +98,7 @@
         var defaults = {
                 flakeCount : 35,
                 flakeColor : '#ffffff',
+				flakePosition: 'absolute',
                 flakeIndex: 999999,
                 minSize : 1,
                 maxSize : 2,
@@ -141,7 +142,7 @@
                     flakeMarkup.css({'background' : options.flakeColor});
                 }
                 
-                flakeMarkup.attr({'class': 'snowfall-flakes', 'id' : 'flake-' + this.id}).css({'width' : this.size, 'height' : this.size, 'position' : 'absolute', 'top' : this.y, 'left' : this.x, 'fontSize' : 0, 'zIndex' : options.flakeIndex});
+                flakeMarkup.attr({'class': 'snowfall-flakes', 'id' : 'flake-' + this.id}).css({'width' : this.size, 'height' : this.size, 'position' : options.flakePosition, 'top' : this.y, 'left' : this.x, 'fontSize' : 0, 'zIndex' : options.flakeIndex});
                 
                 if($(element).get(0).tagName === $(document).get(0).tagName){
                     $('body').append(flakeMarkup);
@@ -257,7 +258,7 @@
 
                             if(bounds.top-collectionHeight > 0){                                    
                                 document.body.appendChild(canvas);
-                                canvas.style.position = 'absolute';
+                                canvas.style.position = options.flakePosition;
                                 canvas.height = collectionHeight;
                                 canvas.width = bounds.width;
                                 canvas.style.left = bounds.left + 'px';
