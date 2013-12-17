@@ -286,7 +286,6 @@
             $(window).bind("resize", function(){  
                 elHeight = $(element)[0].clientHeight;
                 elWidth = $(element)[0].offsetWidth;
-                console.log(elHeight);
             }); 
             
 
