@@ -1,0 +1,4 @@
+html,body{padding:0; margin:0;}
+.darkBg{background:#2d0f0f url(images/smashing.jpg) top center;background-repeat:no-repeat;}
+.lightBg{background : url(images/snow.jpg) #b1dde0 top center no-repeat;}
+.collectonme{margin:120px auto; background: red; width:50%; text-align:center; font-size:1.2em; color:#fff;}

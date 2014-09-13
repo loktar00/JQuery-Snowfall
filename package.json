@@ -1,0 +1,30 @@
+{
+  "name": "JQuery-Snowfall",
+  "version": "1.0.0",
+  "description": "Make it snow on you page or elements",
+  "main": "snowfall.jquery.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://loktar00@github.com/loktar00/JQuery-Snowfall.git"
+  },
+  "keywords": [
+    "snow",
+    "snowfall",
+    "snowing"
+  ],
+  "author": "Jason Brown loktar00 loktar69@hotmail.com",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/loktar00/JQuery-Snowfall/issues"
+  },
+  "homepage": "https://github.com/loktar00/JQuery-Snowfall",
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "gulp-connect": "^2.0.6",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.0.1"
+  }
+}
