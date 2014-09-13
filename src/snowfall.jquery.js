@@ -227,22 +227,30 @@
                     
                     for(var i =0; i < elements.length; i++){
                             var bounds = elements[i].getBoundingClientRect(),
-                                canvas = document.createElement('canvas'),
+                                $canvas = $('<canvas/>',
+                                    {
+                                        'class' : 'snowfall-canvas'
+                                    }),
                                 collisionData = [];
 
                             if(bounds.top-collectionHeight > 0){                                    
-                                document.body.appendChild(canvas);
-                                canvas.style.position = options.flakePosition;
-                                canvas.height = collectionHeight;
-                                canvas.width = bounds.width;
-                                canvas.style.left = bounds.left + 'px';
-                                canvas.style.top = bounds.top-collectionHeight + 'px';
+                                $('body').append($canvas);
+
+                                $canvas.css({
+                                    'position' : options.flakePosition,
+                                    'left'     : bounds.left + 'px',
+                                    'top'      : bounds.top-collectionHeight + 'px'
+                                })
+                                .prop({
+                                    width: bounds.width,
+                                    height: collectionHeight
+                                });
                                 
                                 for(var w = 0; w < bounds.width; w++){
                                     collisionData[w] = [];
                                 }
                                 
-                                canvasCollection.push({element :canvas, x : bounds.left, y : bounds.top-collectionHeight, width : bounds.width, height: collectionHeight, colData : collisionData});
+                                canvasCollection.push({element : $canvas.get(0), x : bounds.left, y : bounds.top-collectionHeight, width : bounds.width, height: collectionHeight, colData : collisionData});
                             }
                     }
                 }else{
@@ -302,6 +310,7 @@
             // clears the snowflakes
             this.clear = function(){
                 $(element).children('.snowfall-flakes').remove();
+                $('.snowfall-canvas').remove();
                 flakes = [];
                 cancelAnimationFrame(snowTimeout);
             }
