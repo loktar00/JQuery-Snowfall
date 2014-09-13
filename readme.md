@@ -4,6 +4,8 @@ Snowfall jquery plugin
 [Live Demo](http://loktar00.github.io/JQuery-Snowfall/)
 ---
 
+Install using `bower install jquery-snowfall`
+
 Version 1.7.1
 ---
 
