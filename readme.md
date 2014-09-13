@@ -1,8 +1,11 @@
 Snowfall jquery plugin
 ======================
 
-Update 9/13/2014
+[Live Demo](http://loktar00.github.io/JQuery-Snowfall/)
 ---
+
+**Update 9/13/2014**
+
 
 Updated to use [gulpjs](http://gulpjs.com/) to build files.
 
