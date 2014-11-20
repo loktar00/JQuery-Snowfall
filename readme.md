@@ -6,7 +6,7 @@ Snowfall jquery plugin
 
 Install using `bower install jquery-snowfall`
 
-Version 1.7.1
+Version 1.7.2
 ---
 
 Bug fixes, removed `requestAnimationFrame` polyfill.
