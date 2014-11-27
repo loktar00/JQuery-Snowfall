@@ -187,6 +187,8 @@ var snowFall = (function(){
                     this.x = elLeft + random(widthOffset, elWidth - widthOffset);
                     this.stepSize = random(1,10) / 100;
                     this.size = random((defaults.minSize * 100), (defaults.maxSize * 100)) / 100;
+                    this.element.style.width = this.size + 'px';
+                    this.element.style.height = this.size + 'px';
                     this.speed = random(defaults.minSpeed, defaults.maxSpeed);
                 }
             },

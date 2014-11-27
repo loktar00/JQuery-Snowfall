@@ -231,6 +231,8 @@ if (!Date.now)
                     this.x = random(widthOffset, elWidth - widthOffset);
                     this.stepSize = random(1,10) / 100;
                     this.size = random((options.minSize * 100), (options.maxSize * 100)) / 100;
+                    this.element.style.width = this.size + 'px';
+                    this.element.style.height = this.size + 'px';
                     this.speed = random(options.minSpeed, options.maxSpeed);
                 }
             }
