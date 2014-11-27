@@ -220,7 +220,7 @@ if (!Date.now)
                         }
                     }
                     
-                    if(this.x > (elWidth) - widthOffset || this.x < widthOffset){
+                    if(this.x + this.size > (elWidth) - widthOffset || this.x < widthOffset){
                         this.reset();
                     }
                 }

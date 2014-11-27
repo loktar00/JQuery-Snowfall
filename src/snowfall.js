@@ -176,7 +176,7 @@ var snowFall = (function(){
                     this.step += this.stepSize;
                     this.x += Math.cos(this.step);
                     
-                    if(this.x > (elLeft + elWidth) - widthOffset || this.x < widthOffset){
+                    if(this.x + this.size > (elLeft + elWidth) - widthOffset || this.x < widthOffset){
                         this.reset();
                     }
                 }
