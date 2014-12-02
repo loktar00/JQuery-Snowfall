@@ -67,7 +67,8 @@ minSize,
 maxSize,
 minSpeed,
 maxSpeed,
-round, 		true or false, makes the snowflakes rounded if the browser supports it.
+fps,			equalizes the animation to the given framerate, default 30
+round,		true or false, makes the snowflakes rounded if the browser supports it.
 shadow		true or false, gives the snowflakes a shadow if the browser supports it.
 ```
 
