@@ -74,6 +74,7 @@ if (!Date.now)
 }());
 
 var snowFall = (function(){
+    var flakes = [];
     function jSnow(){
         // local methods
         var defaults = {
@@ -91,12 +92,9 @@ var snowFall = (function(){
             collectionHeight : 40
             },
             element = {},
-            flakes = [],
             flakeId = 0,
             elHeight = 0,
             elWidth = 0,
-            elTop = 0,
-            elLeft = 0,
             widthOffset = 0,
             snowTimeout = 0,
             // For extending the default object with properties
@@ -119,12 +117,12 @@ var snowFall = (function(){
                 }
             },
             // snowflake
-            flake = function(_x, _y, _size, _speed, _id)
+            flake = function(_el, _size, _speed, _id)
             {
                 // Flake properties
                 this.id = _id; 
-                this.x  = _x + elLeft;
-                this.y  = _y + elTop;
+                this.x  = random(widthOffset,elWidth - widthOffset);
+                this.y  = random(0, elHeight);
                 this.size = _size;
                 this.speed = _speed;
                 this.step = 0;
@@ -157,8 +155,13 @@ var snowFall = (function(){
                 if(defaults.shadow){
                     setStyle(flakeObj,{'-moz-box-shadow' : '1px 1px 1px #555', '-webkit-box-shadow' : '1px 1px 1px #555', 'boxShadow' : '1px 1px 1px #555'});
                 }
-                
-                document.body.appendChild(flakeObj);
+
+                if(_el.tagName === document.body.tagName){
+                    document.body.appendChild(flakeObj);
+                }else{
+                    _el.appendChild(flakeObj);
+                }
+
                 
                 this.element = flakeObj;
                 
@@ -166,25 +169,25 @@ var snowFall = (function(){
                 this.update = function(){
                     this.y += this.speed;
 
-                    if(this.y > (elTop + elHeight) - (this.size  + 6)){
+                    if(this.y > (elHeight) - (this.size  + 6)){
                         this.reset();
                     }
                     
                     this.element.style.top = this.y + 'px';
-                    this.element.style.left = ~~this.x + 'px';
+                    this.element.style.left = this.x + 'px';
 
                     this.step += this.stepSize;
                     this.x += Math.cos(this.step);
                     
-                    if(this.x + this.size > (elLeft + elWidth) - widthOffset || this.x < widthOffset){
+                    if(this.x + this.size > (elWidth) - widthOffset || this.x < widthOffset){
                         this.reset();
                     }
                 }
                 
                 // Resets the snowflake once it reaches one of the bounds set
                 this.reset = function(){
-                    this.y = elTop;
-                    this.x = elLeft + random(widthOffset, elWidth - widthOffset);
+                    this.y = 0;
+                    this.x = random(widthOffset, elWidth - widthOffset);
                     this.stepSize = random(1,10) / 100;
                     this.size = random((defaults.minSize * 100), (defaults.maxSize * 100)) / 100;
                     this.element.style.width = this.size + 'px';
@@ -205,10 +208,8 @@ var snowFall = (function(){
                 
                 //init the element vars
                 element = _element;
-                elHeight = element.clientHeight,
+                elHeight = element.clientHeight;
                 elWidth = element.offsetWidth;
-                elTop = element.offsetTop;
-                elLeft = element.offsetLeft;
 
                 element.snow = this;
                 
@@ -221,33 +222,51 @@ var snowFall = (function(){
                 window.onresize = function(){
                     elHeight = element.clientHeight;
                     elWidth = element.offsetWidth;
-                    elTop = element.offsetTop;
-                    elLeft = element.offsetLeft;
                 }
                 
                 // initialize the flakes
                 for(i = 0; i < defaults.flakeCount; i+=1){
-                    flakeId = flakes.length;
-                    flakes.push(new flake(random(widthOffset,elWidth - widthOffset), random(0, elHeight), random((defaults.minSize * 100), (defaults.maxSize * 100)) / 100, random(defaults.minSpeed, defaults.maxSpeed), flakeId));
+                    flakeId = 0;
+                    for(j = 0; j < flakes.length; j++){
+                        if (flakes[j].id == flakeId) flakeId++;
+                        if (flakes[j].id > flakeId) break;
+                    }
+                    flakes.push(new flake(element, random((defaults.minSize * 100), (defaults.maxSize * 100)) / 100, random(defaults.minSpeed, defaults.maxSpeed), flakeId));
+                    flakes.sort(function(a, b){return a.id - b.id});
                 }
                 // start the snow
                 animateSnow();
             },
             clear : function(){
                 var flakeChildren = null;
-                
+
                 if(!element.getElementsByClassName){
                     flakeChildren = element.querySelectorAll('.snowfall-flakes');
                 }else{
                     flakeChildren = element.getElementsByClassName('snowfall-flakes');
                 }
 
+                var newFlakes = flakes.slice();
+                for(i = 0; i < flakes.length; i++){
+                    for(j = 0; j < flakeChildren.length; j++) {
+                        if (flakeChildren[j].id == 'flake-'+flakes[i].id) {
+                            for (k = 0; k < newFlakes.length; k++) {
+                                if (flakes[i].id == newFlakes[k].id) {
+                                    newFlakes.splice(k, 1);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                newFlakes.sort(function(a, b){return a.id - b.id});
+                flakes = newFlakes;
+
                 var flakeChilLen = flakeChildren.length;
                 while(flakeChilLen--){
                     element.removeChild(flakeChildren[flakeChilLen]);
                 }
-                
-                flakes = [];
+
                 cancelAnimationFrame(snowTimeout);
             }
         }
