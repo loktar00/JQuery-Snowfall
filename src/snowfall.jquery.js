@@ -99,12 +99,13 @@ if (!Date.now)
         var defaults = {
                 flakeCount : 35,
                 flakeColor : '#ffffff',
-				flakePosition: 'absolute',
+                flakePosition: 'absolute',
                 flakeIndex: 999999,
                 minSize : 1,
                 maxSize : 2,
                 minSpeed : 1,
                 maxSpeed : 5,
+                fps : 30,
                 round : false,
                 shadow : false,
                 collection : false,
@@ -155,22 +156,23 @@ if (!Date.now)
                 this.element = document.getElementById('flake-' + this.id);
                 
                 // Update function, used to update the snow flakes, and checks current snowflake against bounds
-                this.update = function(){
-                    this.y += this.speed;
-                    
+                this.update = function(elapsed){
+                    var fpsRatio = elapsed / (1/options.fps*1000);
+                    this.y += this.speed*fpsRatio;
+
                     if(this.y > (elHeight) - (this.size  + 6)){
                         this.reset();
                     }
                     
                     this.element.style.top = this.y + 'px';
                     this.element.style.left = this.x + 'px';
-                    
-                    this.step += this.stepSize;
+
+                    this.step += this.stepSize*fpsRatio;
 
                     if (doRatio === false) {
-                        this.x += Math.cos(this.step);
+                        this.x += Math.cos(this.step)*fpsRatio;
                     } else {
-                        this.x += (doRatio + Math.cos(this.step));
+                        this.x += (doRatio + Math.cos(this.step))*fpsRatio;
                     }
 
                     // Pileup check
@@ -244,8 +246,9 @@ if (!Date.now)
                 elHeight = $(element).height(),
                 elWidth = $(element).width(),
                 widthOffset = 0,
-                snowTimeout = 0;
-        
+                snowTimeout = 0,
+                last = 0;
+
             // Collection Piece ******************************
             if(options.collection !== false){
                 var testElem = document.createElement('canvas');
@@ -326,16 +329,17 @@ if (!Date.now)
             }
 
             // this controls flow of the updating snow
-            function snow(){
+            function snow(timestamp){
                 for( i = 0; i < flakes.length; i += 1){
-                    flakes[i].update();
+                    flakes[i].update(timestamp-last);
                 }
-                
-                snowTimeout = requestAnimationFrame(function(){snow()});
+                last = timestamp;
+
+                snowTimeout = requestAnimationFrame(function(ts){snow(ts)});
             }
-            
-            snow();
-            
+
+            snow(0);
+
             // clears the snowflakes
             this.clear = function(){
                 $(element).children('.snowfall-flakes').remove();
