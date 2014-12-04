@@ -177,7 +177,7 @@ var snowFall = (function(){
                     this.element.style.left = ~~this.x + 'px';
 
                     this.step += this.stepSize*fpsRatio;
-                    this.x += Math.cos(this.step);
+                    this.x += Math.cos(this.step)*fpsRatio;
                     
                     if(this.x + this.size > (elLeft + elWidth) - widthOffset || this.x < widthOffset){
                         this.reset();
