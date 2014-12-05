@@ -120,9 +120,8 @@ if (!Date.now)
             $(element).data("snowfall", this);
 
             // Snow flake object
-            function Flake(_x, _y, _size, _speed, _id){
+            function Flake(_x, _y, _size, _speed){
                 // Flake properties
-                this.id = _id;
                 this.x  = _x;
                 this.y  = _y;
                 this.size = _size;
@@ -137,23 +136,33 @@ if (!Date.now)
                 var flakeMarkup = null;
 
                 if(options.image){
-                    flakeMarkup = $(document.createElement("img"));
-                    flakeMarkup[0].src = options.image;
+                    flakeMarkup = document.createElement("img");
+                    flakeMarkup.src = options.image;
                 }else{
-                    flakeMarkup = $(document.createElement("div"));
-                    flakeMarkup.css({'background' : options.flakeColor});
+                    flakeMarkup = document.createElement("div");
+                    $(flakeMarkup).css({'background' : options.flakeColor});
                 }
 
-                flakeMarkup.attr({'class': 'snowfall-flakes', 'id' : 'flake-' + this.id}).css({'width' : this.size, 'height' : this.size, 'position' : options.flakePosition, 'top' : this.y, 'left' : this.x, 'fontSize' : 0, 'zIndex' : options.flakeIndex});
+                $(flakeMarkup).attr({
+                    'class': 'snowfall-flakes', 
+                }).css({
+                    'width' : this.size, 
+                    'height' : this.size, 
+                    'position' : options.flakePosition, 
+                    'top' : this.y, 
+                    'left' : this.x, 
+                    'fontSize' : 0, 
+                    'zIndex' : options.flakeIndex
+                });
 
                 if($(element).get(0).tagName === $(document).get(0).tagName){
-                    $('body').append(flakeMarkup);
+                    $('body').append($(flakeMarkup));
                     element = $('body');
                 }else{
-                    $(element).append(flakeMarkup);
+                    $(element).append($(flakeMarkup));
                 }
 
-                this.element = document.getElementById('flake-' + this.id);
+                this.element = flakeMarkup;
 
                 // Update function, used to update the snow flakes, and checks current snowflake against bounds
                 this.update = function(){
@@ -239,8 +248,7 @@ if (!Date.now)
             }
 
             // local vars
-            var flakeId = 0,
-                i = 0,
+            var i = 0,
                 elHeight = $(element).height(),
                 elWidth = $(element).width(),
                 widthOffset = 0,
@@ -279,7 +287,14 @@ if (!Date.now)
                                     collisionData[w] = [];
                                 }
 
-                                canvasCollection.push({element : $canvas.get(0), x : bounds.left, y : bounds.top-collectionHeight, width : bounds.width, height: collectionHeight, colData : collisionData});
+                                canvasCollection.push({
+                                    element : $canvas.get(0), 
+                                    x : bounds.left, 
+                                    y : bounds.top-collectionHeight, 
+                                    width : bounds.width, 
+                                    height: collectionHeight, 
+                                    colData : collisionData
+                                });
                             }
                     }
                 }else{
@@ -303,13 +318,7 @@ if (!Date.now)
 
             // initialize the flakes
             for(i = 0; i < options.flakeCount; i+=1){
-                flakeId = 0;
-                $.each(flakes, function(i, flake){
-                    if (flake.id == flakeId) flakeId++;
-                    if (flake.id > flakeId) return false;
-                });
-                flakes.push(new Flake(random(widthOffset,elWidth - widthOffset), random(0, elHeight), random((options.minSize * 100), (options.maxSize * 100)) / 100, random(options.minSpeed, options.maxSpeed), flakeId));
-                flakes.sort(function(a, b){return a.id - b.id});
+                flakes.push(new Flake(random(widthOffset,elWidth - widthOffset), random(0, elHeight), random((options.minSize * 100), (options.maxSize * 100)) / 100, random(options.minSpeed, options.maxSpeed)));
             }
 
             // This adds the style to make the snowflakes round via border radius property
