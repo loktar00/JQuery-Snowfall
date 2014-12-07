@@ -22,6 +22,9 @@
     <div class="collectonme">
         <p>Collect on meeeeee!!!</p>
     </div>
+    <div class="test-container">
+
+    </div>
     <script src='../dist/snowfall.jquery.min.js'></script>
     <script type='text/javascript'>     
         $(document).ready(function(){
@@ -29,7 +32,22 @@
 
             //Start the snow default options you can also make it snow in certain elements, etc.
             $(document).snowfall();
-            
+
+            var $testContainer = $('.test-container'),
+                testContainerIsSnowing = true;
+
+            $testContainer.snowfall();
+
+            $testContainer.click(function(e){
+                testContainerIsSnowing = !testContainerIsSnowing;
+
+                if(!testContainerIsSnowing){
+                    $testContainer.snowfall('clear');
+                }else{
+                    $testContainer.snowfall();
+                }
+            });
+
             $("#clear").click(function(){
                 $(document).snowfall('clear'); // How you clear
             });

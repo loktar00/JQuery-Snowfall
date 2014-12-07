@@ -95,9 +95,9 @@ if (!Date.now)
 }());
 
 (function($){
-    var flakes = [];
     $.snowfall = function(element, options){
-        var defaults = {
+        var flakes = [],
+            defaults = {
                 flakeCount : 35,
                 flakeColor : '#ffffff',
 				flakePosition: 'absolute',
@@ -353,21 +353,6 @@ if (!Date.now)
             // clears the snowflakes
             this.clear = function(){
                 $('.snowfall-canvas').remove();
-                var newFlakes = flakes.slice();
-                $.each(flakes, function(i, flake){
-                    $(element).children('.snowfall-flakes').each(function(){
-                        if (this.id == 'flake-'+flake.id) {
-                            $.each(newFlakes, function(j, e){
-                                if (flake.id == e.id) {
-                                    newFlakes.splice(j, 1);
-                                    return false;
-                                }
-                            })
-                        }
-                    });
-                });
-                newFlakes.sort(function(a, b){return a.id - b.id});
-                flakes = newFlakes;
                 $(element).children('.snowfall-flakes').remove();
                 cancelAnimationFrame(snowTimeout);
             }

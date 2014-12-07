@@ -14,6 +14,9 @@
     <div class="collectonme">
         <p>Collect on meeeeee!!!</p>
     </div>
+    <div class="test-container">
+
+    </div>
     <script src='../dist/snowfall.min.js'></script>
     <script type='text/javascript'>     
         var collectOnMe = document.querySelectorAll('.collectonme'),
@@ -25,6 +28,21 @@
         
         //default options
         snowFall.snow(document.body);
+
+        var testContainer = document.querySelector('.test-container'),
+            testContainerIsSnowing = true;
+
+        snowFall.snow(testContainer);
+
+        testContainer.addEventListener('click', function(e){
+            testContainerIsSnowing = !testContainerIsSnowing;
+
+            if(!testContainerIsSnowing){
+                snowFall.snow(testContainer, "clear");
+            }else{
+                snowFall.snow(testContainer);
+            }
+        })
 
         document.getElementById("clear").addEventListener("click", function(){
             snowFall.snow(document.body, "clear");

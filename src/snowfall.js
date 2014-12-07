@@ -74,8 +74,6 @@ if (!Date.now)
 }());
 
 var snowFall = (function(){
-    var flakes = [];
-
     function jSnow(){
         // local methods
         var defaults = {
@@ -92,6 +90,7 @@ var snowFall = (function(){
                 image : false,
                 collectionHeight : 40
             },
+            flakes = [],
             element = {},
             elHeight = 0,
             elWidth = 0,
