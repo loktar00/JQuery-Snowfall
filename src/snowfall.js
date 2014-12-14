@@ -37,6 +37,7 @@
     flakeCount,
     flakeColor,
     flakeIndex,
+    flakePosition,
     minSize,
     maxSize,
     minSpeed,
@@ -80,6 +81,7 @@ var snowFall = (function(){
                 flakeCount : 35,
                 flakeColor : '#ffffff',
                 flakeIndex: 999999,
+                flakePosition: 'absolute',
                 minSize : 1,
                 maxSize : 2,
                 minSpeed : 1,
@@ -141,7 +143,7 @@ var snowFall = (function(){
                 }
                 
                 flakeObj.className = 'snowfall-flakes';
-                setStyle(flakeObj, {'width' : this.size, 'height' : this.size, 'position' : 'absolute', 'top' : this.y, 'left' : this.x, 'fontSize' : 0, 'zIndex' : defaults.flakeIndex});
+                setStyle(flakeObj, {'width' : this.size, 'height' : this.size, 'position' : defaults.flakePosition, 'top' : this.y, 'left' : this.x, 'fontSize' : 0, 'zIndex' : defaults.flakeIndex});
         
                 // This adds the style to make the snowflakes round via border radius property 
                 if(defaults.round){
