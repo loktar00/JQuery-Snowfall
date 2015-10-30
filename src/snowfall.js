@@ -106,6 +106,14 @@ var snowFall = (function(){
                     }
                 }
             },
+            // For setting CSS3 transform styles
+            transform = function (el, styles){
+                el.style.webkitTransform = styles;
+                el.style.MozTransform = styles;
+                el.style.msTransform = styles;
+                el.style.OTransform = styles;
+                el.style.transform = styles;
+            },
             // random between range
             random = function random(min, max){
                 return Math.round(min + Math.random()*(max-min)); 
@@ -143,7 +151,7 @@ var snowFall = (function(){
                 }
                 
                 flakeObj.className = 'snowfall-flakes';
-                setStyle(flakeObj, {'width' : this.size, 'height' : this.size, 'position' : defaults.flakePosition, 'top' : this.y, 'left' : this.x, 'fontSize' : 0, 'zIndex' : defaults.flakeIndex});
+                setStyle(flakeObj, {'width' : this.size, 'height' : this.size, 'position' : defaults.flakePosition, 'top' : 0, 'left' : 0, 'will-change': 'transform', 'fontSize' : 0, 'zIndex' : defaults.flakeIndex});
         
                 // This adds the style to make the snowflakes round via border radius property 
                 if(defaults.round){
@@ -171,9 +179,8 @@ var snowFall = (function(){
                     if(this.y > elHeight - (this.size  + 6)){
                         this.reset();
                     }
-                    
-                    this.element.style.top = this.y + 'px';
-                    this.element.style.left = this.x + 'px';
+
+                    transform(this.element, 'translateY('+this.y+'px) translateX('+this.x+'px)');
 
                     this.step += this.stepSize;
                     this.x += Math.cos(this.step);
