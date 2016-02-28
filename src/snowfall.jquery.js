@@ -144,14 +144,14 @@ if (!Date.now)
                 }
 
                 $(flakeMarkup).attr({
-                    'class': 'snowfall-flakes', 
+                    'class': 'snowfall-flakes',
                 }).css({
-                    'width' : this.size, 
-                    'height' : this.size, 
-                    'position' : options.flakePosition, 
-                    'top' : this.y, 
-                    'left' : this.x, 
-                    'fontSize' : 0, 
+                    'width' : this.size,
+                    'height' : this.size,
+                    'position' : options.flakePosition,
+                    'top' : this.y,
+                    'left' : this.x,
+                    'fontSize' : 0,
                     'zIndex' : options.flakeIndex
                 });
 
@@ -197,7 +197,7 @@ if (!Date.now)
                                             this.speed *= .5;
                                         }
 
-                                        ctx.fillStyle = "#fff";
+                                        ctx.fillStyle = defaults.flakeColor;
 
                                         if(colData[parseInt(curX)][parseInt(curY+this.speed+this.size)] == undefined){
                                             colData[parseInt(curX)][parseInt(curY+this.speed+this.size)] = 1;
@@ -220,7 +220,7 @@ if (!Date.now)
                                             this.x--;
                                         }else{
                                             //stop
-                                            ctx.fillStyle = "#fff";
+                                            ctx.fillStyle = defaults.flakeColor;
                                             ctx.fillRect(curX, curY, this.size, this.size);
                                             colData[parseInt(curX)][parseInt(curY)] = 1;
                                             this.reset();
@@ -288,11 +288,11 @@ if (!Date.now)
                                 }
 
                                 canvasCollection.push({
-                                    element : $canvas.get(0), 
-                                    x : bounds.left, 
-                                    y : bounds.top-collectionHeight, 
-                                    width : bounds.width, 
-                                    height: collectionHeight, 
+                                    element : $canvas.get(0),
+                                    x : bounds.left,
+                                    y : bounds.top-collectionHeight,
+                                    width : bounds.width,
+                                    height: collectionHeight,
                                     colData : collisionData
                                 });
                             }
