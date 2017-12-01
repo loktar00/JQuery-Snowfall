@@ -16,6 +16,9 @@
        limitations under the License.
     ====================================================================
 
+    Version 1.52 Dec 1st 2017
+    // Added option to exclude mobile devices
+
     Version 1.51 Dec 2nd 2012
     // fixed bug where snow collection didn't happen if a valid doctype was declared.
 
@@ -49,8 +52,9 @@
     maxSize,
     minSpeed,
     maxSpeed,
-    round,      true or false, makes the snowflakes rounded if the browser supports it.
-    shadow      true or false, gives the snowflakes a shadow if the browser supports it.
+    round,        true or false, makes the snowflakes rounded if the browser supports it.
+    shadow,       true or false, gives the snowflakes a shadow if the browser supports it.
+    excludeMobile true (default) or false. Do not show up on mobile devices to save their batterie and cpu.
 
     Example Usage :
     $(document).snowfall({flakeCount : 100, maxSpeed : 10});
@@ -110,12 +114,18 @@ if (!Date.now)
                 shadow : false,
                 collection : false,
                 collectionHeight : 40,
-                deviceorientation : false
+                deviceorientation : false,
+                excludeMobile : true
             },
             options = $.extend(defaults, options),
             random = function random(min, max){
                 return Math.round(min + Math.random()*(max-min));
             };
+
+            // Are we runing on a mobile device?
+            isMobile = navigator.userAgent.match(/mobile|opera m(ob|in)/i);
+            // If we do and excludeMobile is TRUE: Exit
+            if (isMobile && options.excludeMobile) exit();
 
             $(element).data("snowfall", this);
 
