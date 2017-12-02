@@ -6,6 +6,13 @@ Snowfall jquery plugin
 
 Install using `bower install jquery-snowfall`
 
+
+Version 1.7.5 - Dec 2nd 2017
+---
+
+JQuery-Version: Added option to exclude mobile devices: `excludeMobile` (defaults to true). 
+
+
 Version 1.7.4
 ---
 

@@ -16,8 +16,21 @@
        limitations under the License.
     ====================================================================
 
-    Version 1.52 Dec 1st 2017
-    // Added option to exclude mobile devices
+    Version 1.7.5 - Dec 2nd 2017
+    // JQuery-Version: Added option to exclude mobile devices: `excludeMobile` (defaults to true). 
+
+    Version 1.7.4
+    // Bug fixes, removed `requestAnimationFrame` polyfill.
+    // Updated to use [gulpjs](http://gulpjs.com/) for build process.
+
+    Version 1.6 Dec 8th 2012
+    // Added the ability to use images as snow flakes instead of just solid colored elements.
+        $(element).snowfall({image :"images/flake.png", minSize: 10, maxSize:32});
+        
+        Pure version
+        snowFall.snow(elementCollection, {image : "images/flake.png", minSize: 10, maxSize:32});
+
+        elementCollection can be any valid element such as document.body
 
     Version 1.51 Dec 2nd 2012
     // fixed bug where snow collection didn't happen if a valid doctype was declared.
