@@ -1,7 +1,7 @@
 Snowfall jquery plugin
 ======================
 
-[Live Demo](http://loktar00.github.io/JQuery-Snowfall/)
+[Live Demo](https://loktar00.github.io/JQuery-Snowfall/)
 ---
 
 Install using `bower install jquery-snowfall`
@@ -11,7 +11,7 @@ Version 1.7.4
 
 Bug fixes, removed `requestAnimationFrame` polyfill.
 
-Updated to use [gulpjs](http://gulpjs.com/) for build process.
+Updated to use [gulpjs](https://gulpjs.com/) for build process.
 
 
 Version 1.6 Dec 8th 2012
