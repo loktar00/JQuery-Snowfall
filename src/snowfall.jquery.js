@@ -16,6 +16,22 @@
        limitations under the License.
     ====================================================================
 
+    Version 1.7.5 - Dec 2nd 2017
+    // JQuery-Version: Added option to exclude mobile devices: `excludeMobile` (defaults to true). 
+
+    Version 1.7.4
+    // Bug fixes, removed `requestAnimationFrame` polyfill.
+    // Updated to use [gulpjs](http://gulpjs.com/) for build process.
+
+    Version 1.6 Dec 8th 2012
+    // Added the ability to use images as snow flakes instead of just solid colored elements.
+        $(element).snowfall({image :"images/flake.png", minSize: 10, maxSize:32});
+        
+        Pure version
+        snowFall.snow(elementCollection, {image : "images/flake.png", minSize: 10, maxSize:32});
+
+        elementCollection can be any valid element such as document.body
+
     Version 1.51 Dec 2nd 2012
     // fixed bug where snow collection didn't happen if a valid doctype was declared.
 
@@ -49,8 +65,9 @@
     maxSize,
     minSpeed,
     maxSpeed,
-    round,      true or false, makes the snowflakes rounded if the browser supports it.
-    shadow      true or false, gives the snowflakes a shadow if the browser supports it.
+    round,        true or false, makes the snowflakes rounded if the browser supports it.
+    shadow,       true or false, gives the snowflakes a shadow if the browser supports it.
+    excludeMobile true (default) or false. Do not show up on mobile devices to save their batterie and cpu.
 
     Example Usage :
     $(document).snowfall({flakeCount : 100, maxSpeed : 10});
@@ -110,12 +127,18 @@ if (!Date.now)
                 shadow : false,
                 collection : false,
                 collectionHeight : 40,
-                deviceorientation : false
+                deviceorientation : false,
+                excludeMobile : true
             },
             options = $.extend(defaults, options),
             random = function random(min, max){
                 return Math.round(min + Math.random()*(max-min));
             };
+
+            // Are we runing on a mobile device?
+            isMobile = navigator.userAgent.match(/mobile|opera m(ob|in)/i);
+            // If we do and excludeMobile is TRUE: Exit
+            if (isMobile && options.excludeMobile) exit();
 
             $(element).data("snowfall", this);
 
